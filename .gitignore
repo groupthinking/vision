@@ -14,3 +14,4 @@ actions-runner/
 venv/
 __pycache__/
 
+_backup_vision_cleanup/
