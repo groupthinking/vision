@@ -141,7 +141,7 @@ def create_startup_summary():
 - **Shared SQLite Database** - Persistent state and action coordination
 - **Auto-Repair System** - Monitors and fixes failed servers
 
-### **Active MCP Servers (5 servers configured)**
+### **Active MCP Servers (7 servers configured)**
 
 #### **1. YouTube UVAI Processor** ⭐ PRIMARY
 - **Path**: `{youtube_path_primary}` (fallback: `{youtube_path_alt}`)
@@ -281,6 +281,24 @@ def main():
         mcp_servers.append(start_mcp_server(
             "Self-Correcting Executor",
             [sys.executable, self_correcting_executor_path],
+            env={"COORDINATOR_URL": coordinator_url}
+        ))
+
+    # 4. Video Agent
+    video_agent_path = str(BASE_DIR / "servers" / "video_agent_server.py")
+    if os.path.exists(video_agent_path):
+        mcp_servers.append(start_mcp_server(
+            "Video Agent",
+            [sys.executable, video_agent_path],
+            env={"COORDINATOR_URL": coordinator_url}
+        ))
+
+    # 5. Code Analysis Agent
+    code_analysis_path = str(BASE_DIR / "servers" / "code_analysis_server.py")
+    if os.path.exists(code_analysis_path):
+        mcp_servers.append(start_mcp_server(
+            "Code Analysis Agent",
+            [sys.executable, code_analysis_path],
             env={"COORDINATOR_URL": coordinator_url}
         ))
 
