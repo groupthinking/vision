@@ -1,9 +1,4 @@
-/**
- * For more details on how to configure Wrangler, refer to:
- * https://developers.cloudflare.com/workers/wrangler/configuration/
- */
 {
-    // "$schema": "node_modules/wrangler/config-schema.json",
     "name": "netmesh-production",
     "main": "worker/index.ts",
     "compatibility_date": "2025-08-10",
@@ -16,7 +11,6 @@
     "assets": {
         "directory": "dist",
         "not_found_handling": "single-page-application",
-        // "run_worker_first": ["!/src/*", "!/api/docs/*"],
         "run_worker_first": true,
         "binding": "ASSETS"
     },
@@ -46,12 +40,6 @@
             }
         ]
     },
-    /**
-	 * Bindings
-	 * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
-	 * databases, object storage, AI inference, real-time communication and more.
-	 * https://developers.cloudflare.com/workers/runtime-apis/bindings/
-	 */
     "ai": {
         "binding": "AI",
         "remote": true
@@ -62,27 +50,10 @@
     "dispatch_namespaces": [
         {
             "binding": "DISPATCHER",
-            "namespace": "vibesdk-default-namespace",
+            "namespace": "uvai",
             "remote": true
         }
     ],
-    /*
-	"containers": [
-		{
-			"class_name": "UserAppSandboxService",
-			"image": "./SandboxDockerfile",
-            // Altering max_instances value will have no effect. Please use the MAX_SANDBOX_INSTANCES var instead.
-			"max_instances": 2900,
-            // ATTENTION: Altering instance_type value will have no effect. Please use the SANDBOX_INSTANCE_TYPE var instead.
-            "instance_type": {
-                "vcpu": 4,
-                "memory_mib": 4096,
-                "disk_mb": 10240
-            },
-            "rollout_step_percentage": 100
-		}
-	],
-	*/
     "d1_databases": [
         {
             "binding": "DB",
@@ -139,24 +110,22 @@
     ],
     "routes": [
         {
-            "pattern": "*.netmesh.ai/*",
-            "zone_name": "netmesh.ai"
+            "pattern": "uvai.io",
+            "custom_domain": true,
+            "zone_id": "a4ca65a8ca06e5d4de9b55f7b9a9a58c"
         },
-        /*
         {
-            "pattern": "*build-preview.cloudflare.dev/*",
-            "custom_domain": false,
-            "zone_id": "db01fac4261b2604aacad8410443a3e2"
+            "pattern": "*.uvai.io/*",
+            "zone_id": "a4ca65a8ca06e5d4de9b55f7b9a9a58c"
         }
-        */
     ],
     "vars": {
         "TEMPLATES_REPOSITORY": "https://github.com/groupthinking/netmesh",
         "ALLOWED_EMAIL": "garveyht@gmail.com",
-        "DISPATCH_NAMESPACE": "netmesh",
+        "DISPATCH_NAMESPACE": "uvai",
         "ENABLE_READ_REPLICAS": "true",
-        "CLOUDFLARE_AI_GATEWAY": "netmesh",
-        "CUSTOM_DOMAIN": "netmesh.ai",
+        "CLOUDFLARE_AI_GATEWAY": "uvai",
+        "CUSTOM_DOMAIN": "uvai.io",
         "MAX_SANDBOX_INSTANCES": "10",
         "SANDBOX_INSTANCE_TYPE": "standard"
     },
