@@ -139,6 +139,8 @@ app.add_middleware(
         # Additional production domains
         "https://uvai.platform",
         "https://api.uvai.platform",
+        "https://uvai.io",
+        "https://www.uvai.io",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"],
@@ -348,7 +350,7 @@ def custom_openapi():
     
     # Add custom extensions
     openapi_schema["info"]["x-logo"] = {
-        "url": "https://uvai.platform/logo.png"
+        "url": "https://uvai.io/logo.png"
     }
     
     # Add server information
@@ -358,7 +360,7 @@ def custom_openapi():
             "description": "Development server"
         },
         {
-            "url": "https://api.uvai.platform",
+            "url": "https://api.uvai.io",
             "description": "Production server"
         }
     ]
